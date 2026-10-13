@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="theme-light" data-theme="light">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>蓝冰 Blue Ice — Typora 主题</title>
+<meta name="description" content="蓝冰 Blue Ice：一套冷蓝冰面的 Typora 主题，含浅色与深色两版。雾面面板、深墨代码块、克制的暖琥珀。" />
+<link id="theme-css" rel="stylesheet" href="blue-ice.css" />
+<style>
+  /* ---- 预览页自身的骨架。命名都带 show- 前缀，避免和主题选择器打架 ---- */
+  html { scroll-behavior: smooth; }
+
+  .show-header {
+    position: sticky; top: 0; z-index: 20;
+    display: flex; align-items: center; gap: 14px;
+    padding: 10px 22px;
+    background: color-mix(in srgb, var(--ice-panel-solid) 82%, transparent);
+    backdrop-filter: saturate(1.4) blur(18px);
+    -webkit-backdrop-filter: saturate(1.4) blur(18px);
+    border-bottom: 1px solid var(--ice-hairline-soft);
+  }
+  .show-brand {
+    font-family: var(--ice-font-display);
+    font-weight: 600; font-size: 15px; letter-spacing: .02em;
+    color: var(--ice-ink);
+  }
+  .show-brand span { color: var(--ice-accent); }
+  .show-header .show-spacer { flex: 1 1 auto; }
+  .show-btn {
+    font: inherit; font-size: 13px; line-height: 1;
+    padding: 7px 14px; cursor: pointer;
+    color: var(--ice-ink-mid);
+    background: var(--ice-panel-solid);
+    border: 1px solid var(--ice-hairline);
+    border-radius: 999px;
+    box-shadow: var(--ice-shadow-sm);
+    transition: color .18s var(--ice-ease), border-color .18s var(--ice-ease),
+                background-color .18s var(--ice-ease);
+  }
+  .show-btn:hover {
+    color: var(--ice-accent);
+    border-color: var(--ice-accent-light);
+    background: var(--ice-accent-soft);
+  }
+
+  .show-wrap { max-width: 1180px; margin: 0 auto; padding: 0 22px 72px; }
+
+  /* ---- 头图区 ---- */
+  .show-hero { padding: 68px 8px 44px; max-width: 780px; }
+  .show-eyebrow {
+    display: inline-block; margin-bottom: 18px;
+    font-size: 12px; letter-spacing: .16em; text-transform: uppercase;
+    color: var(--ice-accent);
+  }
+  .show-hero h1 {
+    font-family: var(--ice-font-display);
+    font-size: 3.1em; font-weight: 600; line-height: 1.16;
+    letter-spacing: -.01em; text-align: left;
+    margin: 0 0 20px; padding: 0; color: var(--ice-ink);
+  }
+  .show-hero h1::after { display: none; }
+  .show-hero h1 em {
+    font-style: normal;
+    background-image: linear-gradient(100deg, var(--ice-accent-light), var(--ice-accent));
+    -webkit-background-clip: text; background-clip: text;
+    -webkit-text-fill-color: transparent; color: var(--ice-accent);
+  }
+  .show-lede {
+    font-size: 1.06em; line-height: 1.85; color: var(--ice-ink-mid);
+    margin: 0 0 26px; max-width: 62ch;
+  }
+  .show-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 30px; }
+  .show-chip {
+    font-size: 12.5px; padding: 5px 11px; border-radius: 999px;
+    color: var(--ice-ink-mid);
+    background: var(--ice-accent-softer);
+    border: 1px solid var(--ice-hairline-soft);
+  }
+  .show-actions { display: flex; flex-wrap: wrap; gap: 10px; }
+  .show-cta {
+    display: inline-block; text-decoration: none;
+    /* 显式复位全部 background 子属性：主题给正文链接设了 background-size，
+       只覆盖 background-image 的话渐变会被压成一条 */
+    background-repeat: no-repeat; background-position: 0 0; background-size: auto;
+    background-origin: padding-box; background-clip: border-box;
+    font-size: 14px; font-weight: 600; letter-spacing: .01em;
+    padding: 10px 20px; border-radius: 999px;
+    /* 渐变整体压深：原来的浅冰蓝底 + 白字对比度不够，字几乎看不清 */
+    background-image: linear-gradient(140deg, var(--ice-accent), #14678a);
+    color: #ffffff; text-shadow: 0 1px 1px rgba(6, 32, 45, .22);
+    border: 1px solid transparent;
+    box-shadow: 0 4px 14px rgba(14, 44, 60, .2), inset 0 1px 0 rgba(255, 255, 255, .22);
+    transition: transform .18s var(--ice-ease), box-shadow .18s var(--ice-ease);
+  }
+  .show-cta:hover { transform: translateY(-1px); box-shadow: 0 8px 22px rgba(14, 44, 60, .26), inset 0 1px 0 rgba(255, 255, 255, .22); }
+  .show-cta:focus-visible { outline: 2px solid var(--ice-accent-light); outline-offset: 2px; }
+  .show-cta.show-ghost {
+    background-image: none; color: var(--ice-accent);
+    background-color: var(--ice-panel-solid);
+    border-color: var(--ice-hairline);
+    box-shadow: var(--ice-shadow-sm);
+  }
+  .show-cta.show-ghost:hover { background-color: var(--ice-accent-soft); border-color: var(--ice-accent-light); }
+
+  /* ---- 模拟的 Typora 窗口 ---- */
+  .show-window {
+    display: flex; overflow: hidden;
+    background: var(--ice-panel);
+    border: 1px solid var(--ice-hairline-soft);
+    border-radius: var(--ice-radius-lg);
+    box-shadow: var(--ice-shadow-lg);
+  }
+  .show-window #typora-sidebar {
+    width: 248px; flex: 0 0 248px;
+    padding: 12px 12px 24px;
+    overflow-y: auto; max-height: 1180px;
+    box-sizing: border-box;
+    position: static;
+  }
+  .show-window content {
+    flex: 1 1 auto; min-width: 0; display: block;
+    background: transparent;
+    max-height: 1180px; overflow-y: auto;
+  }
+  .show-window #write { box-shadow: none; border: none; border-radius: 0; margin: 0; max-width: none; }
+  /* 预览页里的代码行高与真实 Typora 对齐，避免看着比实际松散 */
+  .show-window .CodeMirror-line { line-height: 1.7; }
+  .show-window .file-list-item { padding: 3px 6px; font-size: 13px; }
+  .show-window .file-node-content { padding: 2px 6px; display: block; font-size: 13px; }
+  .show-window .outline-item { padding: 1px 4px; font-size: 13px; }
+  .show-window .outline-label { display: inline-block; text-decoration: none; cursor: pointer; }
+  .show-window .outline-children { list-style: none; padding-left: 14px; margin: 0; }
+  .show-window .outline-item-wrapper { list-style: none; padding-left: 6px; margin: 4px 0; }
+  .show-window .outline-title { font-size: 12px; letter-spacing: .05em; padding: 6px 8px; opacity: .75; }
+  .show-window .sidebar-tabs { display: flex; gap: 14px; padding: 2px 6px 0; }
+  .show-window #file-library-search { padding: 6px 2px 10px; }
+  .show-window #file-library-search-input { width: 100%; padding: 5px 9px; box-sizing: border-box; font-size: 13px; }
+  .show-window table { border-collapse: separate; }
+
+  .show-caption {
+    margin: 14px 2px 0; font-size: 12.5px; color: var(--ice-ink-soft);
+  }
+
+  /* ---- 下方的安装说明 ---- */
+  .show-steps { margin-top: 64px; display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
+  .show-step {
+    padding: 22px 22px 24px;
+    background: var(--ice-panel);
+    border: 1px solid var(--ice-hairline-soft);
+    border-radius: var(--ice-radius-md);
+    box-shadow: var(--ice-shadow-sm);
+  }
+  .show-step h3 {
+    margin: 0 0 10px; padding: 0; font-size: 1.02em; color: var(--ice-ink);
+    font-family: var(--ice-font-display);
+  }
+  .show-step h3::before { display: none; }
+  .show-step p { margin: 0 0 8px; font-size: .93em; color: var(--ice-ink-mid); line-height: 1.75; }
+  .show-step p:last-child { margin-bottom: 0; }
+  .show-step code {
+    font-size: .86em; padding: .1em .38em; border-radius: var(--ice-radius-sm);
+    background: var(--ice-accent-soft); color: var(--ice-accent);
+    border: 1px solid var(--ice-hairline-soft);
+  }
+  .show-num {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 22px; height: 22px; margin-right: 8px;
+    border-radius: 50%; font-size: 12px;
+    color: #fff; background-image: linear-gradient(140deg, var(--ice-accent-light), var(--ice-accent));
+  }
+  .show-foot {
+    margin-top: 56px; padding-top: 20px;
+    border-top: 1px solid var(--ice-hairline-soft);
+    font-size: 12.5px; color: var(--ice-ink-soft);
+    display: flex; flex-wrap: wrap; gap: 10px 22px;
+  }
+  .show-foot a { color: var(--ice-accent); background-image: none; }
+
+  @media (max-width: 900px) {
+    .show-hero { padding: 44px 4px 32px; }
+    .show-hero h1 { font-size: 2.3em; }
+    .show-window { flex-direction: column; }
+    .show-window #typora-sidebar { width: 100%; flex: none; max-height: 260px; border-right: none; border-bottom: 1px solid var(--ice-hairline-soft); }
+    .show-window content { max-height: none; }
+    .show-wrap { padding: 0 14px 56px; }
+  }
+
+  /* 切到深色时，预览页自己的骨架也要跟着换（主题变量会自动生效） */
+  html[data-theme="dark"] .show-header { background: color-mix(in srgb, var(--ice-panel-solid) 70%, transparent); }
+</style>
+</head>
+<body class="typora-node os-mac">
+
+<header class="show-header">
+  <div class="show-brand">蓝冰 <span>Blue Ice</span></div>
+  <div class="show-spacer"></div>
+  <button class="show-btn" id="toggle-theme" type="button" aria-live="polite">切换到深色</button>
+</header>
+
+<div class="show-wrap">
+
+  <section class="show-hero">
+    <span class="show-eyebrow">Typora Theme · 浅色 + 深色</span>
+    <h1>蓝色的冰，<br /><em>给长时间写字的屏幕。</em></h1>
+    <p class="show-lede">
+      冷蓝的底、雾面的面板、深墨色的代码块，外加一处被严格限制的暖琥珀色。
+      名字取"蓝"给颜色、"冰"给质感 —— 所有面板都由同一套语法构成：
+      一层 1px 内高光（厚度）、一圈冷色扩散阴影（浮起）、一点模糊的底色。
+    </p>
+    <div class="show-chips">
+      <span class="show-chip">浅色 + 深色</span>
+      <span class="show-chip">零外部依赖</span>
+      <span class="show-chip">中文排印友好</span>
+      <span class="show-chip">打印自动翻天</span>
+      <span class="show-chip">专注模式适配</span>
+    </div>
+    <div class="show-actions">
+      <a class="show-cta" href="https://github.com/" id="dl-zip">下载主题</a>
+      <a class="show-cta show-ghost" href="#install">怎么装</a>
+    </div>
+  </section>
+
+  <div class="show-window">
+    <aside id="typora-sidebar">
+  <div class="sidebar-tabs">
+    <div class="sidebar-tab active"><span class="info-panel-tab-title active">文件</span></div>
+    <div class="sidebar-tab"><span class="info-panel-tab-title">大纲</span></div>
+  </div>
+  <div id="file-library-search"><input id="file-library-search-input" placeholder="搜索文件…" /></div>
+  <div class="file-list">
+    <div class="file-list-item"><span class="file-list-item-file-name-part">蓝冰</span><span class="file-list-item-file-ext-part">.md</span></div>
+    <div class="file-list-item active"><span class="file-list-item-file-name-part">README</span><span class="file-list-item-file-ext-part">.md</span></div>
+    <div class="file-library-node file-tree-node file-library-directory-node active">
+      <span class="file-node-content"><span class="file-node-title">notes</span></span>
+      <div class="file-library-node file-tree-node file-library-file-node active"><span class="file-node-background"></span><span class="file-node-content"><span class="file-node-title">风格笔记.md</span></span></div>
+      <div class="file-library-node file-tree-node file-library-file-node"><span class="file-node-content"><span class="file-node-title">深色模式.md</span></span></div>
+    </div>
+  </div>
+  <div class="outline-content">
+    <div class="outline-title-wrapper"><span class="outline-title">大纲</span></div>
+    <ul class="outline-item-wrapper">
+      <li class="outline-item outline-h1"><a class="outline-label">蓝冰</a></li>
+      <li class="outline-item outline-h2"><a class="outline-label">冷调画布</a></li>
+      <li class="outline-item outline-h2 outline-item-open"><a class="outline-label">磨砂面板</a><ul class="outline-children"><li class="outline-item outline-h3 outline-item-active"><a class="outline-label">表格也是雾面</a></li></ul></li>
+      <li class="outline-item outline-h3"><a class="outline-label">圆角与厚度</a></li>
+      <li class="outline-item outline-h3"><a class="outline-label">待办与清单</a></li>
+    </ul>
+  </div>
+</aside>
+    <content>
+      <div id="write"><h1>蓝冰</h1>
+<p>同样的文字，<strong>蓝冰</strong>让层级更轻。这一套主题只做三个动作：<em>冷调的底</em>、<em>磨砂的面</em>、<em>克制的暖色</em>，其余全部交给字距与留白。</p>
+<p>正文里偶尔需要一点强调 —— 比如 <mark>这样一条琥珀纸带</mark>，或者按下 <kbd>⌘</kbd> + <kbd>K</kbd> 唤出快捷面板，也可以用 <code>inline code</code> 标注一个小片段，剩下的交给 <a href="#">链接</a> 与 <del>被划掉的旧结论</del>。</p>
+
+<h2>冷调画布</h2>
+<p>底色不能是纯白。纯白太硬，雾面会失去厚度。这一版的画布从顶部的 <code>#dfeaf2</code> 极缓地过渡到 <code>#f4f9fc</code>，写作区则是一张半透明的磨砂纸浮在上面。段落之间的关系由留白说明，而不是靠边框。</p>
+<blockquote><p>冰的本质不是透明，而是<strong>厚度</strong>：一层 1px 的高光、一圈冷色阴影、一点模糊的底色，三者缺一，面板就会塌成一张色卡。</p></blockquote>
+
+<h3>圆角与厚度</h3>
+<ul>
+  <li>大圆角（14–20px）负责“轻”，阴影负责“浮”。</li>
+  <li>阴影必须是冷色：<code>rgba(14,44,60,.08)</code>，用纯黑会脏。
+    <ul><li>嵌套一层换空心圆点</li><li>再深一层换成实心方点</li></ul>
+  </li>
+  <li>唯一的高对比留给代码块 —— 深墨面板，边框带一点冰蓝。</li>
+</ul>
+
+<ol>
+  <li>先定画布与墨色，再定强调色。</li>
+  <li>强调色只出现在三个地方：标题、链接、勾选框。</li>
+  <li>暖色只允许出现一次。</li>
+</ol>
+
+<h2>磨砂面板</h2>
+<div class="md-fences md-end-block ty-contain-cm modeLoaded" lang="python"><pre class="md-fences-content"><span class="cm-s-inner"><span class="CodeMirror-code">
+<div class="CodeMirror-line"><span class="CodeMirror-gutter-wrapper"><span class="CodeMirror-linenumber">1</span></span><span class="cm-keyword">from</span> <span class="cm-variable">dataclasses</span> <span class="cm-keyword">import</span> <span class="cm-variable">dataclass</span>, <span class="cm-variable">field</span></div>
+<div class="CodeMirror-line"><span class="CodeMirror-gutter-wrapper"><span class="CodeMirror-linenumber">2</span></span>&nbsp;</div>
+<div class="CodeMirror-line"><span class="CodeMirror-gutter-wrapper"><span class="CodeMirror-linenumber">3</span></span><span class="cm-meta">@dataclass</span></div>
+<div class="CodeMirror-line"><span class="CodeMirror-gutter-wrapper"><span class="CodeMirror-linenumber">4</span></span><span class="cm-keyword">class</span> <span class="cm-def">Glass</span>:</div>
+<div class="CodeMirror-line"><span class="CodeMirror-gutter-wrapper"><span class="CodeMirror-linenumber">5</span></span>    <span class="cm-string">"""一块蓝冰：冷底、磨砂、圆角。"""</span></div>
+<div class="CodeMirror-line"><span class="CodeMirror-gutter-wrapper"><span class="CodeMirror-linenumber">6</span></span>    <span class="cm-variable">hue</span>: <span class="cm-builtin">str</span> = <span class="cm-string">"#1e88b0"</span></div>
+<div class="CodeMirror-line"><span class="CodeMirror-gutter-wrapper"><span class="CodeMirror-linenumber">7</span></span>    <span class="cm-variable">blur</span>: <span class="cm-builtin">int</span> = <span class="cm-number">20</span></div>
+<div class="CodeMirror-line"><span class="CodeMirror-gutter-wrapper"><span class="CodeMirror-linenumber">8</span></span>    <span class="cm-variable">layers</span>: <span class="cm-builtin">list</span> = <span class="cm-variable">field</span>(<span class="cm-variable">default_factory</span>=<span class="cm-builtin">list</span>)</div>
+<div class="CodeMirror-line"><span class="CodeMirror-gutter-wrapper"><span class="CodeMirror-linenumber">9</span></span>&nbsp;</div>
+<div class="CodeMirror-line"><span class="CodeMirror-gutter-wrapper"><span class="CodeMirror-linenumber">10</span></span>    <span class="cm-keyword">def</span> <span class="cm-def">frost</span>(<span class="cm-variable">self</span>, <span class="cm-variable">opacity</span>: <span class="cm-builtin">float</span> = <span class="cm-number">0.76</span>) -&gt; <span class="cm-builtin">str</span>:</div>
+<div class="CodeMirror-line"><span class="CodeMirror-gutter-wrapper"><span class="CodeMirror-linenumber">11</span></span>        <span class="cm-comment"># 透明度越低，冰面越厚</span></div>
+<div class="CodeMirror-line"><span class="CodeMirror-gutter-wrapper"><span class="CodeMirror-linenumber">12</span></span>        <span class="cm-keyword">return</span> <span class="cm-string">f"rgba(255,255,255,{opacity})"</span></div>
+</span></span></pre><div class="code-tooltip">python</div></div>
+<p>代码面板是页面上最“实”的一块，也是唯一的强对比。它不参与雾面的透明游戏，而是作为锚点存在：视线在浅色页面上滑行时，需要一个深色的落点。</p>
+<div class="md-fences md-end-block ty-contain-cm modeLoaded" lang="bash"><pre class="md-fences-content"><span class="cm-s-inner"><span class="CodeMirror-code">
+<div class="CodeMirror-line"><span class="CodeMirror-gutter-wrapper"><span class="CodeMirror-linenumber">1</span></span><span class="cm-comment"># 把两套主题放进 Typora 主题目录</span></div>
+<div class="CodeMirror-line"><span class="CodeMirror-gutter-wrapper"><span class="CodeMirror-linenumber">2</span></span><span class="cm-variable">cp</span> <span class="cm-string">blue-ice*.css</span> <span class="cm-string">"$HOME/Library/Application Support/abnerworks.Typora/themes/"</span></div>
+</span></span></pre><div class="code-tooltip">bash</div></div>
+<h3>表格也是雾面</h3>
+<table><thead><tr><th>层</th><th>颜色</th><th>作用</th><th>透明度</th></tr></thead>
+<tbody>
+<tr><td>画布</td><td><code>#e9f1f7</code></td><td>冷白底，托住所有面板</td><td>100%</td></tr>
+<tr><td>写作区</td><td><code>#ffffff</code></td><td>磨砂纸，正文所在</td><td>76%</td></tr>
+<tr><td>引用 / 目录</td><td><code>#eef7fc</code></td><td>次级雾面，退后一层</td><td>72%</td></tr>
+<tr><td>代码块</td><td><code>#0d1b25</code></td><td>深墨锚点，最强对比</td><td>100%</td></tr>
+<tr><td>强调</td><td><code>#1e88b0</code></td><td>标题、链接、勾选</td><td>—</td></tr>
+</tbody></table>
+
+<hr />
+
+<h2>待办与清单</h2>
+<ul class="ul-list">
+  <li class="md-list-item task-list-item md-task-list-item task-list-done"><input type="checkbox" checked=""></input><p>确定冰蓝主色 <code>#1e88b0</code></p></li>
+  <li class="md-list-item task-list-item md-task-list-item task-list-done"><input type="checkbox" checked=""></input><p>给代码块做深墨面板</p></li>
+  <li class="md-list-item task-list-item md-task-list-item task-list-not-done"><input type="checkbox"></input><p>把暖色限制在荧光笔一处</p></li>
+  <li class="md-list-item task-list-item md-task-list-item task-list-not-done"><input type="checkbox"></input><p>深色模式同步一版 <code>blue-ice-dark.css</code></p></li>
+  <li class="md-list-item task-list-item md-task-list-item task-list-not-done"><input type="checkbox"></input><p>复选框要和普通列表一眼分开：未勾选是白底冰蓝描边，勾选是实心冰蓝加白勾</p></li>
+</ul>
+
+<h3>普通无序列表（作为对照）</h3>
+<ul class="ul-list">
+  <li class="md-list-item"><p>普通条目的冰晶符号</p></li>
+  <li class="md-list-item"><p>它不应该和复选框长得像</p></li>
+</ul>
+
+<h4>原码片段</h4>
+<div class="md-fences md-end-block ty-contain-cm modeLoaded" lang="html"><pre class="md-fences-content"><span class="cm-s-inner"><span class="CodeMirror-code">
+<div class="CodeMirror-line"><span class="CodeMirror-gutter-wrapper"><span class="CodeMirror-linenumber">1</span></span><span class="cm-operator">&lt;</span><span class="cm-tag">section</span> <span class="cm-attribute">class</span>=<span class="cm-string">"glass"</span><span class="cm-operator">&gt;</span></div>
+<div class="CodeMirror-line"><span class="CodeMirror-gutter-wrapper"><span class="CodeMirror-linenumber">2</span></span>  <span class="cm-operator">&lt;</span><span class="cm-tag">h2</span><span class="cm-operator">&gt;</span>蓝冰<span class="cm-operator">&lt;/</span><span class="cm-tag">h2</span><span class="cm-operator">&gt;</span></div>
+<div class="CodeMirror-line"><span class="CodeMirror-gutter-wrapper"><span class="CodeMirror-linenumber">3</span></span><span class="cm-operator">&lt;/</span><span class="cm-tag">section</span><span class="cm-operator">&gt;</span></div>
+</span></span></pre><div class="code-tooltip">html</div></div>
+<p>写到这里，一条分隔线上的那枚小圆点，就是整套主题里最不重要、也最必要的装饰。<sup>[1]</sup></p>
+<p class="md-footnote">[1] 装饰的作用是提示节奏，而不是提示存在感。</p>
+</div>
+    </content>
+  </div>
+  <p class="show-caption">
+    上面就是主题的真实渲染结果（不是截图），左侧侧栏、代码块、表格、待办清单都按 Typora 的真实 DOM 结构套用。
+    你会看到中文排版用的 16px / 行高 1.82 —— 这是刻意的选择，比其他主题松一档，长时间读中文更舒服。
+  </p>
+
+  <section class="show-steps" id="install">
+    <div class="show-step">
+      <h3><span class="show-num">1</span>下载并解压</h3>
+      <p>从仓库下载 <code>blue-ice.css</code> 和 <code>blue-ice-dark.css</code> 两个文件即可，其余是本主题的文档与截图。</p>
+    </div>
+    <div class="show-step">
+      <h3><span class="show-num">2</span>放进主题文件夹</h3>
+      <p>Typora 菜单：<strong>文件 → 偏好设置 → 外观 → 打开主题文件夹</strong>。</p>
+      <p>两个 CSS 必须直接放在该目录下，放进子文件夹不会被识别。</p>
+    </div>
+    <div class="show-step">
+      <h3><span class="show-num">3</span>选主题</h3>
+      <p>回到 <strong>外观 → 主题</strong>，选 <code>Blue Ice</code>（浅色）或 <code>Blue Ice Dark</code>（深色），无需重启。</p>
+    </div>
+  </section>
+
+  <footer class="show-foot">
+    <span>蓝冰 Blue Ice · MIT License</span>
+    <span>深浅两版互相独立，可各自单独使用</span>
+    <span>反馈与建议：<a href="https://github.com/" id="repo-link">仓库 Issues</a></span>
+  </footer>
+</div>
+
+<script>
+  (function () {
+    var LIGHT = 'blue-ice.css', DARK = 'blue-ice-dark.css';
+    var root = document.documentElement;
+    var btn = document.getElementById('toggle-theme');
+    var css = document.getElementById('theme-css');
+
+    function apply(theme) {
+      var dark = theme === 'dark';
+      css.href = dark ? DARK : LIGHT;
+      root.className = dark ? 'theme-dark' : 'theme-light';
+      root.setAttribute('data-theme', theme);
+      btn.textContent = dark ? '切换到浅色' : '切换到深色';
+      try { localStorage.setItem('blue-ice-theme', theme); } catch (e) {}
+    }
+
+    // 优先级：URL 参数 > 上次选择 > 系统外观。
+    // 加 ?theme=light|dark 是为了分享链接的人能指定看到哪一版。
+    var forced = (location.search.match(/[?&]theme=(light|dark)/) || [])[1];
+    var saved = null;
+    try { saved = localStorage.getItem('blue-ice-theme'); } catch (e) {}
+    if (!forced && !saved) {
+      saved = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    }
+    apply(forced || saved);
+
+    btn.addEventListener('click', function () {
+      apply(root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+    });
+  })();
+</script>
+</body>
+</html>

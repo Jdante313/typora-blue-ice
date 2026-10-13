@@ -1,0 +1,9 @@
+# macOS
+.DS_Store
+
+# Python
+__pycache__/
+*.pyc
+
+# 开发用生成物（可由 dev/make_harness.py 重新生成）
+dev/out/
