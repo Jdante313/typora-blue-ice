@@ -33,8 +33,9 @@ def main() -> int:
     # README 里的三处：预览地址、clone 命令，以及仓库/Issues 相对链接（相对链接无需改）
     readme = root / "README.md"
     s = readme.read_text(encoding="utf-8")
+    # 用户站域名全小写；仓库路径保持仓库名的原大小写
     s = s.replace("https://你的用户名.github.io/typora-blue-ice/",
-                  f"https://{user.lower()}.github.io/{REPO}/"  # 域名小写，仓库路径保持原样)
+                  f"https://{user.lower()}.github.io/{REPO}/")
     s = s.replace("https://github.com/你的用户名/typora-blue-ice.git", f"{base}.git")
     readme.write_text(s, encoding="utf-8")
     print(f"  README.md             -> {base}")
