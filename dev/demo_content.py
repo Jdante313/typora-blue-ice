@@ -71,7 +71,7 @@ CONTENT = '''<h1>蓝冰</h1>
   <li>阴影必须是冷色：<code>rgba(14,44,60,.08)</code>，用纯黑会脏。
     <ul><li>嵌套一层换空心圆点</li><li>再深一层换成实心方点</li></ul>
   </li>
-  <li>唯一的高对比留给代码块 —— 深墨面板，边框带一点冰蓝。</li>
+  <li>唯一的高对比留给代码块 —— 独立面板，边框带一点冰蓝。</li>
 </ul>
 
 <ol>
@@ -82,7 +82,7 @@ CONTENT = '''<h1>蓝冰</h1>
 
 <h2>磨砂面板</h2>
 ''' + CODE_PY + '''
-<p>代码面板是页面上最“实”的一块，也是唯一的强对比。它不参与雾面的透明游戏，而是作为锚点存在：视线在浅色页面上滑行时，需要一个深色的落点。</p>
+<p>代码面板是页面上最“实”的一块，也是唯一的强对比。它不参与雾面的透明游戏，而是作为独立区块存在：让代码与正文一眼分开。</p>
 ''' + CODE_BASH + '''
 <h3>表格也是雾面</h3>
 <table><thead><tr><th>层</th><th>颜色</th><th>作用</th><th>透明度</th></tr></thead>
@@ -90,7 +90,7 @@ CONTENT = '''<h1>蓝冰</h1>
 <tr><td>画布</td><td><code>#e9f1f7</code></td><td>冷白底，托住所有面板</td><td>100%</td></tr>
 <tr><td>写作区</td><td><code>#ffffff</code></td><td>磨砂纸，正文所在</td><td>76%</td></tr>
 <tr><td>引用 / 目录</td><td><code>#eef7fc</code></td><td>次级雾面，退后一层</td><td>72%</td></tr>
-<tr><td>代码块</td><td><code>#0d1b25</code></td><td>深墨锚点，最强对比</td><td>100%</td></tr>
+<tr><td>代码块</td><td><code>#0d1b25</code> / <code>#fafafa</code></td><td>独立面板，最强对比</td><td>100%</td></tr>
 <tr><td>强调</td><td><code>#1e88b0</code></td><td>标题、链接、勾选</td><td>—</td></tr>
 </tbody></table>
 
@@ -99,7 +99,7 @@ CONTENT = '''<h1>蓝冰</h1>
 <h2>待办与清单</h2>
 <ul class="ul-list">
   <li class="md-list-item task-list-item md-task-list-item task-list-done"><input type="checkbox" checked=""></input><p>确定冰蓝主色 <code>#1e88b0</code></p></li>
-  <li class="md-list-item task-list-item md-task-list-item task-list-done"><input type="checkbox" checked=""></input><p>给代码块做深墨面板</p></li>
+  <li class="md-list-item task-list-item md-task-list-item task-list-done"><input type="checkbox" checked=""></input><p>给代码块做独立面板</p></li>
   <li class="md-list-item task-list-item md-task-list-item task-list-not-done"><input type="checkbox"></input><p>把暖色限制在荧光笔一处</p></li>
   <li class="md-list-item task-list-item md-task-list-item task-list-not-done"><input type="checkbox"></input><p>深色模式同步一版 <code>blue-ice-dark.css</code></p></li>
   <li class="md-list-item task-list-item md-task-list-item task-list-not-done"><input type="checkbox"></input><p>复选框要和普通列表一眼分开：未勾选是白底冰蓝描边，勾选是实心冰蓝加白勾</p></li>

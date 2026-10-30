@@ -1,14 +1,18 @@
 # 蓝冰 · Blue Ice
 
-一套 **Typora 主题**，含浅色与深色两版：冷蓝的底、雾面的面板、深墨色的代码块，外加一处被严格限制的暖琥珀色。
+一套 **Typora 主题**，三个版本：冷蓝的底、雾面的面板、外加一处被严格限制的暖琥珀色。代码区有两种口味 —— 深墨面板，或浅灰纸面（One Light 配色）。
 
 名字取「蓝」给颜色（`#1e88b0` 这支冷蓝，就是蓝冰本身的色），「冰」给质感（雾、结晶、冷冽的反光）。英文名 **Blue Ice** 即中文名的直译，也正是指冰川压实的致密蓝冰 —— 这套配色的出处。
 
 [在线预览](https://jdante313.github.io/typora-blue-ice/) · [下载](../../releases/latest) · [反馈 Issues](../../issues)
 
-| 浅色 | 深色 |
+| 浅色 `Blue Ice` | 深色 `Blue Ice Dark` |
 | --- | --- |
 | ![浅色主题](screenshots/light.png) | ![深色主题](screenshots/dark.png) |
+
+| 浅色 + 浅灰代码 `Blue Ice Paper` |
+| --- |
+| ![纸面版](screenshots/paper.png) |
 
 ![代码块与表格](screenshots/code-and-table.png)
 
@@ -30,14 +34,22 @@ cd typora-blue-ice
 bash install.sh
 ```
 
-脚本只做一件事：把两个 CSS 拷进 Typora 主题目录，不会动你已有的其他主题。
+脚本只做一件事：把下面三个 CSS 拷进 Typora 主题目录，不会动你已有的其他主题。
 
 ### 方式二：手动（推荐，最稳）
 
-1. 下载本仓库（或只下 `blue-ice.css` 和 `blue-ice-dark.css` 两个文件）。
+1. 下载本仓库（或只下需要的 CSS 文件）。
 2. 打开 Typora：**文件 → 偏好设置 → 外观 → 打开主题文件夹**。
-3. 把两个 CSS **直接放进这个目录**（放进子文件夹不会被识别）。
-4. 回到 **外观 → 主题**，选择 `Blue Ice` 或 `Blue Ice Dark`。
+3. 把 CSS **直接放进这个目录**（放进子文件夹不会被识别）。
+4. 回到 **外观 → 主题**，选择 `Blue Ice`、`Blue Ice Dark` 或 `Blue Ice Paper`。
+
+三个文件互相独立，可以只装其中一个：
+
+| 文件 | 主题列表里的名字 | 内容 |
+| --- | --- | --- |
+| `blue-ice.css` | `Blue Ice` | 浅色 + 深墨代码块（主推） |
+| `blue-ice-dark.css` | `Blue Ice Dark` | 深色 + 深墨代码块 |
+| `blue-ice-paper.css` | `Blue Ice Paper` | 浅色 + 浅灰代码块（One Light 配色） |
 
 > **主题名是文件名决定的**：Typora 把 `blue-ice.css` 显示为 `Blue Ice`（去掉 `.css`、按连字符拆词、首字母大写）。所以别改文件名，否则主题列表里的名字会跟着变。
 >
@@ -47,7 +59,7 @@ bash install.sh
 
 ## 特性
 
-- **浅色 + 深色两版**，互相独立，可单独使用，也可只用其中一版
+- **三个版本，互相独立**：浅色、深色、以及浅色 + 浅灰代码的纸面版
 - **零外部依赖**：没有 `@import`、没有网络字体、没有远程图片，断网、离线导出 PDF 都正常
 - **中文排印友好**：字体栈优先苹方 / 微软雅黑，正文 16px / 行高 1.82 —— 比多数主题松一档，长时间读中文更舒服
 - **跨平台字体回退**：macOS 用 Optima 做标题、SF Mono 做代码；Windows / Linux 自动回落到 Segoe UI、Consolas 等系统字体，不依赖任何需要额外安装的字体
@@ -73,7 +85,26 @@ backdrop-filter: blur(20px);                     /* 磨砂 */
 - **暖色只允许出现一次**：`==高亮==` 的琥珀纸带。除此之外全冷。
 - **主色只出现在四处**：标题装饰、正文链接、勾选框、侧栏选中态。
 - **标题层级靠位移与形状**，不靠堆颜色：H1 居中 + 一道两端化开的「冰棱」，H2 左侧短冰条 + 细底线，H3 冰蓝圆点，H4–H6 依次降饱和。
-- **代码块是全页唯一的强对比**：深墨面板 + 顶边一道冰光。浅色主题下它同样是深色 —— 视线在浅色页面上滑行时需要一个落点。
+- **代码块是全页唯一的强对比**：`Blue Ice` / `Blue Ice Dark` 用深墨面板 + 顶边一道冰光；`Blue Ice Paper` 换成浅灰纸面，靠描边与内阴影"凹"下去，而不是靠深色浮起来。
+
+### 纸面版：为什么代码块是浅灰的
+
+`Blue Ice Paper` 只改代码区，其余与 `Blue Ice` 完全一致。代码配色取自 **Atom One Light**：
+
+| 角色 | 色值 | 说明 |
+| --- | --- | --- |
+| 面板底 | `#fafafa` | 比写作区白 (`#fff`) 暗一档，读起来是凹进去的纸 |
+| 代码文字 | `#383a42` | 深灰，不是纯黑 —— 纯黑在浅灰上会显得刺 |
+| 关键字 | `#a626a4` | One Light 的紫 |
+| 字符串 | `#50a14f` | 冷绿 |
+| 数字 / 常量 | `#986801` | 琥珀 |
+| 函数名 | `#4078f2` | 蓝 |
+| 注释 | `#a0a1a7` | 灰，斜体 |
+| 标签 | `#e45649` | 红 |
+
+深墨代码块是"浮起"的（大阴影），浅灰代码块是"压下"的（细描边 + 内阴影）—— 这是两种完全不同的表现手法，直接把深色方案反相会得到一个又平又脏的面板。
+
+行内代码也一并改成浅灰底深色字，与代码块同一套配色。
 
 ### 为什么正文是 16px / 1.82
 
@@ -99,7 +130,7 @@ Typora 自身的基准是 `14px / 1.43`，切换过来会觉得字变大、行�
 }
 ```
 
-深色主题是独立文件，改配色时两份的 `:root` 一起改即可。
+三个主题是独立文件，改配色时对应文件的 `:root` 一起改即可。纸面版的代码色板在 `--ice-code-*` 与 `--ice-syn-*` 两组 token 里。
 
 ## 已知边界
 
@@ -128,9 +159,15 @@ Copyright (c) 2026 Blue Ice By J · [MIT](LICENSE) —— 可自由使用、修�
 
 ## English
 
-**Blue Ice** is a theme for [Typora](https://typora.io), in both light and dark variants: a cool blue canvas, frosted panels, deep-ink code blocks, and a single restrained warm amber accent. The name translates 蓝冰 ("blue ice") — the dense, compacted ice of glaciers that this palette is drawn from.
+**Blue Ice** is a theme for [Typora](https://typora.io) in three independent variants: a cool blue canvas, frosted panels, deep-ink code blocks, and a single restrained warm amber accent. The name translates 蓝冰 ("blue ice") — the dense, compacted ice of glaciers that this palette is drawn from.
 
-**Install:** download `blue-ice.css` and `blue-ice-dark.css`, drop both **directly** into Typora's theme folder (Preferences → Appearance → Open Theme Folder), then pick `Blue Ice` or `Blue Ice Dark` from the theme menu. No restart needed.
+| File | Name in Typora | Look |
+| --- | --- | --- |
+| `blue-ice.css` | Blue Ice | Light, deep-ink code blocks |
+| `blue-ice-dark.css` | Blue Ice Dark | Dark, deep-ink code blocks |
+| `blue-ice-paper.css` | Blue Ice Paper | Light, pale grey code blocks (Atom One Light palette) |
+
+**Install:** download the CSS file(s) you want, drop them **directly** into Typora's theme folder (Preferences → Appearance → Open Theme Folder), then pick the theme from the menu. No restart needed.
 
 **Highlights:** no external dependencies (no `@import`, no web fonts, fully offline) · CJK-friendly type stack with cross-platform fallbacks · full element coverage including task lists, alerts, footnotes and TOC · print / PDF adaptation · focus mode.
 

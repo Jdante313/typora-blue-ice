@@ -27,14 +27,17 @@ done
 
 if [ -z "$TARGET" ]; then
   echo "没有找到 Typora 主题目录。请手动创建后重试，或直接拷贝这两个文件："
-  printf '  %s\n' "$HERE/blue-ice.css" "$HERE/blue-ice-dark.css"
+  printf '  %s\n' "$HERE/blue-ice.css" "$HERE/blue-ice-dark.css" "$HERE/blue-ice-paper.css"
   echo "Typora 菜单：文件 → 偏好设置 → 外观 → 打开主题文件夹"
   exit 1
 fi
 
 cp "$HERE/blue-ice.css" "$TARGET/"
 cp "$HERE/blue-ice-dark.css" "$TARGET/"
+if [ -f "$HERE/blue-ice-paper.css" ]; then
+  cp "$HERE/blue-ice-paper.css" "$TARGET/"
+fi
 
 echo "已安装到：$TARGET"
-echo "接着在 Typora 里：文件 → 偏好设置 → 外观 → 主题，选择「Blue Ice」或「Blue Ice Dark」。"
+echo "接着在 Typora 里：文件 → 偏好设置 → 外观 → 主题，选择「Blue Ice」「Blue Ice Dark」或「Blue Ice Paper」。"
 echo "（重新打开一份文档即可看到效果，无需重启）"

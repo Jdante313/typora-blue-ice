@@ -63,6 +63,31 @@ PAGE = """<!DOCTYPE html>
     background: var(--ice-accent-soft);
   }
 
+  /* 三个版本的分段切换器 */
+  .show-seg {
+    display: inline-flex; overflow: hidden;
+    background: var(--ice-panel-solid);
+    border: 1px solid var(--ice-hairline);
+    border-radius: 999px;
+    box-shadow: var(--ice-shadow-sm);
+  }
+  .show-seg button {
+    font: inherit; font-size: 13px; line-height: 1;
+    padding: 8px 15px; cursor: pointer;
+    border: none; background: transparent;
+    color: var(--ice-ink-mid);
+    transition: color .18s var(--ice-ease), background-color .18s var(--ice-ease);
+  }
+  .show-seg button + button { border-left: 1px solid var(--ice-hairline-soft); }
+  .show-seg button:hover:not(.active) {
+    color: var(--ice-accent);
+    background: var(--ice-accent-soft);
+  }
+  .show-seg button.active {
+    color: #fff;
+    background-image: linear-gradient(140deg, var(--ice-accent), #14678a);
+  }
+
   .show-wrap { max-width: 1180px; margin: 0 auto; padding: 0 22px 72px; }
 
   /* ---- 头图区 ---- */
@@ -214,28 +239,33 @@ PAGE = """<!DOCTYPE html>
 <header class="show-header">
   <div class="show-brand">蓝冰 <span>Blue Ice</span></div>
   <div class="show-spacer"></div>
-  <button class="show-btn" id="toggle-theme" type="button" aria-live="polite">切换到深色</button>
+  <div class="show-seg" role="group" aria-label="主题版本">
+    <button type="button" data-theme-btn="light" class="active">浅色</button>
+    <button type="button" data-theme-btn="dark">深色</button>
+    <button type="button" data-theme-btn="paper">纸面</button>
+  </div>
 </header>
 
 <div class="show-wrap">
 
   <section class="show-hero">
-    <span class="show-eyebrow">Typora Theme · 浅色 + 深色</span>
+    <span class="show-eyebrow">Typora Theme · 三个版本</span>
     <h1>蓝色的冰，<br /><em>给长时间写字的屏幕。</em></h1>
     <p class="show-lede">
-      冷蓝的底、雾面的面板、深墨色的代码块，外加一处被严格限制的暖琥珀色。
+      冷蓝的底、雾面的面板，外加一处被严格限制的暖琥珀色。
+      代码区有两种口味：深墨面板，或者浅灰纸面（One Light 配色）。
       名字取"蓝"给颜色、"冰"给质感 —— 所有面板都由同一套语法构成：
       一层 1px 内高光（厚度）、一圈冷色扩散阴影（浮起）、一点模糊的底色。
     </p>
     <div class="show-chips">
-      <span class="show-chip">浅色 + 深色</span>
+      <span class="show-chip">浅色 / 深色 / 纸面</span>
       <span class="show-chip">零外部依赖</span>
       <span class="show-chip">中文排印友好</span>
       <span class="show-chip">打印自动翻天</span>
       <span class="show-chip">专注模式适配</span>
     </div>
     <div class="show-actions">
-      <a class="show-cta" href="https://github.com/" id="dl-zip">下载主题</a>
+      <a class="show-cta" href="https://github.com/Jdante313/typora-blue-ice/releases/latest" id="dl-zip">下载主题</a>
       <a class="show-cta show-ghost" href="#install">怎么装</a>
     </div>
   </section>
@@ -254,45 +284,48 @@ PAGE = """<!DOCTYPE html>
   <section class="show-steps" id="install">
     <div class="show-step">
       <h3><span class="show-num">1</span>下载并解压</h3>
-      <p>从仓库下载 <code>blue-ice.css</code> 和 <code>blue-ice-dark.css</code> 两个文件即可，其余是本主题的文档与截图。</p>
+      <p>从 Release 下载需要的 CSS 即可：<code>blue-ice.css</code>（浅色）、<code>blue-ice-dark.css</code>（深色）、<code>blue-ice-paper.css</code>（浅色 + 浅灰代码）。</p>
     </div>
     <div class="show-step">
       <h3><span class="show-num">2</span>放进主题文件夹</h3>
       <p>Typora 菜单：<strong>文件 → 偏好设置 → 外观 → 打开主题文件夹</strong>。</p>
-      <p>两个 CSS 必须直接放在该目录下，放进子文件夹不会被识别。</p>
+      <p>CSS 必须直接放在该目录下，放进子文件夹不会被识别。三个文件互相独立，只装一个也可以。</p>
     </div>
     <div class="show-step">
       <h3><span class="show-num">3</span>选主题</h3>
-      <p>回到 <strong>外观 → 主题</strong>，选 <code>Blue Ice</code>（浅色）或 <code>Blue Ice Dark</code>（深色），无需重启。</p>
+      <p>回到 <strong>外观 → 主题</strong>，选 <code>Blue Ice</code>、<code>Blue Ice Dark</code> 或 <code>Blue Ice Paper</code>，无需重启。</p>
     </div>
   </section>
 
   <footer class="show-foot">
     <span>蓝冰 Blue Ice · MIT License</span>
-    <span>深浅两版互相独立，可各自单独使用</span>
-    <span>反馈与建议：<a href="https://github.com/" id="repo-link">仓库 Issues</a></span>
+    <span>三个版本互相独立，可各自单独使用</span>
+    <span>反馈与建议：<a href="https://github.com/Jdante313/typora-blue-ice/issues" id="repo-link">仓库 Issues</a></span>
   </footer>
 </div>
 
 <script>
   (function () {
-    var LIGHT = 'blue-ice.css', DARK = 'blue-ice-dark.css';
+    var CSS = { light: 'blue-ice.css', dark: 'blue-ice-dark.css', paper: 'blue-ice-paper.css' };
     var root = document.documentElement;
-    var btn = document.getElementById('toggle-theme');
     var css = document.getElementById('theme-css');
+    var btns = document.querySelectorAll('[data-theme-btn]');
 
     function apply(theme) {
-      var dark = theme === 'dark';
-      css.href = dark ? DARK : LIGHT;
-      root.className = dark ? 'theme-dark' : 'theme-light';
+      if (!CSS[theme]) theme = 'light';
+      css.href = CSS[theme];
+      // 纸面版是浅色底，所以 html 上挂 theme-light；具体哪一版看 data-theme
+      root.className = theme === 'dark' ? 'theme-dark' : 'theme-light';
       root.setAttribute('data-theme', theme);
-      btn.textContent = dark ? '切换到浅色' : '切换到深色';
+      for (var i = 0; i < btns.length; i++) {
+        btns[i].classList.toggle('active', btns[i].getAttribute('data-theme-btn') === theme);
+      }
       try { localStorage.setItem('blue-ice-theme', theme); } catch (e) {}
     }
 
     // 优先级：URL 参数 > 上次选择 > 系统外观。
-    // 加 ?theme=light|dark 是为了分享链接的人能指定看到哪一版。
-    var forced = (location.search.match(/[?&]theme=(light|dark)/) || [])[1];
+    // ?theme=light|dark|paper 让分享链接的人能指定看到哪一版。
+    var forced = (location.search.match(/[?&]theme=(light|dark|paper)/) || [])[1];
     var saved = null;
     try { saved = localStorage.getItem('blue-ice-theme'); } catch (e) {}
     if (!forced && !saved) {
@@ -300,9 +333,11 @@ PAGE = """<!DOCTYPE html>
     }
     apply(forced || saved);
 
-    btn.addEventListener('click', function () {
-      apply(root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
-    });
+    for (var j = 0; j < btns.length; j++) {
+      btns[j].addEventListener('click', function () {
+        apply(this.getAttribute('data-theme-btn'));
+      });
+    }
   })();
 </script>
 </body>
