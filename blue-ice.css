@@ -130,10 +130,12 @@ html {
   text-rendering: optimizeLegibility;
 }
 
-body,
+/* 注意：这里不能把 body / .typora-node 设成 transparent。
+   Typora 用 getComputedStyle(document.body).backgroundColor 计算亮度，
+   亮度 < 0.5 就把 Windows 标题栏切到暗色。body 一旦透明，亮度算出来是 0，
+   浅色主题也会被误判成深色 —— 标题栏就变黑了。 */
 content,
-#typora-sidebar,
-.typora-node {
+#typora-sidebar {
   background-color: transparent;
 }
 

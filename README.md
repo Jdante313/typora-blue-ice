@@ -138,6 +138,7 @@ Typora 自身的基准是 `14px / 1.43`，切换过来会觉得字变大、行�
 - **侧栏的模糊效果依赖系统合成**，在关闭窗口透明或低电量模式下可能退化为纯色，不影响可读性。
 - 主题只在 **Typora** 上验证；同一份 CSS 在别的 Markdown 编辑器里不保证生效。
 - 验证环境：Typora 1.14.10 / macOS。Windows 与 Linux 的字体回退已写好，但没有逐一实机截图验证；有差异欢迎提 Issue。
+- **不要给 `body` 或 `.typora-node` 设置透明背景。** Typora 用 `getComputedStyle(document.body).backgroundColor` 计算亮度，亮度低于 0.5 时会把 Windows 标题栏切成深色。body 一旦透明，亮度算出来是 0，浅色主题也会被误判成深色（v1.1.0 及更早的版本踩过这个坑，v1.1.1 已修）。另外，浅色主题在 Windows 上设的是 `system`，标题栏会跟随 Windows 的应用模式 —— 这与 Typora 自带浅色主题的行为一致。
 
 ## 开发
 
